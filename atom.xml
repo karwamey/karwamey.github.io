@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://github.com/XiaotongMo/xiaotongmo.github.io</id>
     <title>XiaotongMo&apos;s blog</title>
-    <updated>2020-12-04T18:23:05.250Z</updated>
+    <updated>2020-12-04T18:24:19.887Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://github.com/XiaotongMo/xiaotongmo.github.io"/>
     <link rel="self" href="https://github.com/XiaotongMo/xiaotongmo.github.io/atom.xml"/>
@@ -11,7 +11,7 @@
     <icon>https://github.com/XiaotongMo/xiaotongmo.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, XiaotongMo&apos;s blog</rights>
     <entry>
-        <title type="html"><![CDATA[卫生统计及SAS应用（一）数据集的建立]]></title>
+        <title type="html"><![CDATA[卫生统计及SAS应用（一）数据集的建立.md]]></title>
         <id>https://github.com/XiaotongMo/xiaotongmo.github.io/post/wei-sheng-tong-ji-ji-sas-ying-yong-md/</id>
         <link href="https://github.com/XiaotongMo/xiaotongmo.github.io/post/wei-sheng-tong-ji-ji-sas-ying-yong-md/">
         </link>
