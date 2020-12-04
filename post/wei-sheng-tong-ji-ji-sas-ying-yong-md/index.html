@@ -1,0 +1,1579 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>
+    卫生统计及SAS应用（一）数据集的建立 | XiaotongMo&#39;s blog
+</title>
+<link rel="shortcut icon" href="https://github.com/XiaotongMo/xiaotongmo.github.io/favicon.ico?v=1607106165308">
+<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"> -->
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://github.com/XiaotongMo/xiaotongmo.github.io/styles/main.css">
+<!-- js -->
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://github.com/XiaotongMo/xiaotongmo.github.io/media/js/jquery.sticky-sidebar.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+
+
+        
+</head>
+
+<body>
+    <div class="main">
+        <div class="header">
+    <div class="nav">
+        <div class="logo">
+            <a href="https://github.com/XiaotongMo/xiaotongmo.github.io">
+                <img class="avatar" src="https://github.com/XiaotongMo/xiaotongmo.github.io/images/avatar.png?v=1607106165308" alt="">
+            </a>
+            <div class="site-title">
+                <h1>
+                    XiaotongMo&#39;s blog
+                </h1>
+            </div>
+        </div>
+        <span class="menu-btn fa fa-align-justify"></span>
+        <div class="menu-container">
+            <ul>
+                
+                    
+                            <li>
+                                <a href="/" class="menu">
+                                    首页
+                                </a>
+                            </li>
+                            
+                                
+                    
+                            <li>
+                                <a href="/archives" class="menu">
+                                    归档
+                                </a>
+                            </li>
+                            
+                                
+                    
+                            <li>
+                                <a href="/tags" class="menu">
+                                    标签
+                                </a>
+                            </li>
+                            
+                                
+                    
+                            <li>
+                                <a href="/post/about" class="menu">
+                                    关于
+                                </a>
+                            </li>
+                            
+                                
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $(".menu-btn").click(function() {
+            $(".menu-container").slideToggle();
+        });
+        $(window).resize(function() {
+
+            if (window.matchMedia('(min-width: 960px)').matches) {
+                $(".menu-container").css('display', 'block')
+            } else {
+                $(".menu-container").css('display', 'none')
+            }
+
+        });
+    });
+</script>
+
+            <div id="main-content" class="post-detail main-container">
+                <!-- left -->
+                <div id="content" class="main-container-left">
+                    <article class="post i-card">
+                        <h2 class="post-title">
+                            卫生统计及SAS应用（一）数据集的建立
+                        </h2>
+                        <div class="post-info">
+                            <time class="post-time">2020-12-05</time>
+                            
+                        </div>
+                        
+                                <div class="post-content">
+                                    <p>硕士课程《卫生统计及SAS应用》</p>
+<p>笔记工具</p>
+<ul>
+<li>Visual Studio Code</li>
+<li>软件内下载Markdown插件 <em>Markdown TOC</em> 插入目录</li>
+</ul>
+<p>笔记内容包括6个部分：<br>
+[x] Lesson 1 数据集的建立<br>
+[ ] Lesson 2 数据集的管理<br>
+[ ] Lesson 3 SAS实用函数<br>
+[ ] Lesson 4 统计描述及分布类型<br>
+[ ] Lesson 5 正态形检验 &amp; t检验<br>
+[ ] Lesson 6 卡方检验</p>
+<!-- TOC -->
+<ul>
+<li><a href="#1-lesson-1-%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E5%BB%BA%E7%AB%8B">1. Lesson 1 数据集的建立</a>
+<ul>
+<li><a href="#11-%E7%AE%80%E4%BB%8B">1.1. 简介</a></li>
+<li><a href="#12-%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%BE%93%E5%85%A5%E6%96%B9%E5%BC%8F%E6%95%B0%E6%8D%AE%E6%AD%A5">1.2. 数据集的基本输入方式（数据步）</a></li>
+<li><a href="#13-%E6%95%B0%E6%8D%AE%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B">1.3. 数据变量类型</a>
+<ul>
+<li><a href="#131-%E5%AD%97%E7%AC%A6%E5%9E%8Bcharacter">1.3.1. 字符型character</a></li>
+<li><a href="#132-%E6%95%B0%E5%80%BC%E5%9E%8Bnumeric">1.3.2. 数值型numeric</a></li>
+</ul>
+</li>
+<li><a href="#14-%E5%8F%98%E9%87%8F%E8%BE%93%E5%85%A5%E5%92%8C%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F">1.4. 变量输入和输出格式</a>
+<ul>
+<li><a href="#141-%E5%AD%97%E7%AC%A6%E5%9E%8B">1.4.1. 字符型</a></li>
+<li><a href="#142-%E6%95%B0%E5%80%BC%E5%9E%8B">1.4.2. 数值型</a></li>
+<li><a href="#143-%E6%97%A5%E6%9C%9F%E5%9E%8B">1.4.3. 日期型</a></li>
+<li><a href="#144-%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BE%93%E5%85%A5%E5%92%8C%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8Fproc--format">1.4.4. 自定义输入和输出格式：proc  format</a></li>
+</ul>
+</li>
+<li><a href="#15-%E7%89%B9%E6%AE%8A%E5%8F%98%E9%87%8F%E7%9A%84%E8%BE%93%E5%85%A5">1.5. 特殊变量的输入</a>
+<ul>
+<li><a href="#151-%E7%BB%99%E5%AE%9A%E5%AE%BD%E5%BA%A6%E6%98%AF%E5%90%A6%E5%8F%96%E7%A9%BA%E6%A0%BC%E4%B8%BA%E5%AD%97%E7%AC%A6">1.5.1. 给定宽度，是否取空格为字符</a></li>
+<li><a href="#152-%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%AD%E6%9C%89%E7%BC%BA%E5%A4%B1%E5%80%BC">1.5.2. 数据集中有<mark>缺失值</mark></a></li>
+<li><a href="#153-%E6%9C%89%E8%A7%84%E5%BE%8B%E7%9A%84%E5%8F%98%E9%87%8F">1.5.3. 有规律的变量</a></li>
+<li><a href="#154-%E6%98%AF%E5%90%A6%E6%8D%A2%E8%A1%8C%E8%BE%93%E5%85%A5">1.5.4. 是否换行输入</a>
+<ul>
+<li><a href="#1541-%E8%BE%93%E5%85%A5%E9%87%8D%E5%A4%8D%E6%B5%8B%E9%87%8F%E6%95%B0%E6%8D%AE">1.5.4.1. 输入重复测量数据</a></li>
+</ul>
+</li>
+<li><a href="#155-%E4%BA%A7%E7%94%9F%E6%96%B0%E5%8F%98%E9%87%8F">1.5.5. 产生新变量</a>
+<ul>
+<li><a href="#1551-%E5%AE%BD%E5%BA%A6%E9%99%90%E5%88%B6">1.5.5.1. 宽度限制</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#16-%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E5%AF%BC%E5%85%A5%E5%92%8C%E5%AF%BC%E5%87%BA">1.6. 数据集的导入和导出</a></li>
+<li><a href="#17-%E5%BB%BA%E7%AB%8B%E5%92%8C%E8%B0%83%E7%94%A8%E6%B0%B8%E4%B9%85%E6%80%A7%E6%95%B0%E6%8D%AE%E9%9B%86">1.7. 建立和调用永久性数据集</a>
+<ul>
+<li><a href="#171-%E5%BB%BA%E7%AB%8B%E6%B0%B8%E4%B9%85%E6%80%A7%E6%95%B0%E6%8D%AE%E9%9B%86">1.7.1. 建立永久性数据集</a></li>
+<li><a href="#172-%E8%B0%83%E7%94%A8%E6%B0%B8%E4%B9%85%E6%80%A7%E6%95%B0%E6%8D%AE%E9%9B%86">1.7.2. 调用永久性数据集</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<p><a id="markdown-1-lesson-1-数据集的建立" name="1-lesson-1-数据集的建立"></a></p>
+<h1 id="1-lesson-1-数据集的建立">1. Lesson 1 数据集的建立</h1>
+<p><a id="markdown-11-简介" name="11-简介"></a></p>
+<h2 id="11-简介">1.1. 简介</h2>
+<p><strong>程序的基本组成</strong></p>
+<p>1 数据步</p>
+<pre><code class="language-SAS">data 数据集名; /*新建数据集，导入储存数据*/
+</code></pre>
+<p>2 过程步</p>
+<pre><code class="language-SAS">proc 操作 &lt;options&gt;; /*处理数据*/
+run;/*结束语*/
+</code></pre>
+<p><a id="markdown-12-数据集的基本输入方式数据步" name="12-数据集的基本输入方式数据步"></a></p>
+<h2 id="12-数据集的基本输入方式数据步">1.2. 数据集的基本输入方式（数据步）</h2>
+<p>1 在SAS直接输入</p>
+<pre><code class="language-sas">data ma.fsh;                     /*数据集起名为ma.fsh，ma是逻辑库名，fsh是ma中的某一数据集名*/
+input age weight height;         /*数据集中输入3个变量，命名为age、weight、height*/
+cards;                           /*标志着后面就是数据输入；或者用 dataline */
+26 62 171
+28 58 166
+;
+</code></pre>
+<p><strong>注意事项</strong></p>
+<blockquote>
+<p>任何语句的结束需要加一个分号“;”，必须是英文状态下的分号。<br>
+数据输入后，分号要另起一行，不能紧接在数据后输入。<br>
+输入的字母不区分大小写<br>
+输入格式不要求必须左对齐或右对齐<br>
+初学者尽量不要把多个语句放在一行。如：<br>
+Input id age;  cards; 1 23; 初学者最好不要用这种输入方式<br>
+SAS数据集名或变量名太长时，可加下划线，如:<br>
+Data drinking_in_beijing;       Input test_score;</p>
+</blockquote>
+<p>2 引用外部数据</p>
+<p>文件--导入数据</p>
+<p><a id="markdown-13-数据变量类型" name="13-数据变量类型"></a></p>
+<h2 id="13-数据变量类型">1.3. 数据变量类型</h2>
+<p>SAS中的变量只有两种类型：字符型（character）和数值型（numeric）。</p>
+<p>日期是被看作是数值型，所有日期型变量被作为是输入日期与1960年1月1日之差。如1980-1-1， SAS会认为这个值是7305。</p>
+<p>不同类型的变量在input语句输入时需要指定相应的格式</p>
+<p><a id="markdown-131-字符型character" name="131-字符型character"></a></p>
+<h3 id="131-字符型character">1.3.1. 字符型character</h3>
+<pre><code class="language-sas">data fh;
+input gender$;    
+/*$表示gender变量是个字符型,字符型变量一定要在变量后面加一个$符号，变量和$之间加不加空格均可。*/
+cards;
+female
+male
+;
+</code></pre>
+<p><a id="markdown-132-数值型numeric" name="132-数值型numeric"></a></p>
+<h3 id="132-数值型numeric">1.3.2. 数值型numeric</h3>
+<p>包括数值与日期</p>
+<ul>
+<li>数值</li>
+</ul>
+<p>如果你想让SAS有选择地读取你的数值，可以在变量后加上w.d的格式。其中，w表示数值的位数（包括小数点），如2.3的位数是3；d表示数值的小数点位数。</p>
+<pre><code class="language-sas">data fh;
+input x 4.2;      /*变量后的4.2表示变量x的宽度共4位，其中小数点2位*/
+cards;
+12
+2.1
+15.6
+23.46
+;
+proc print;
+run;
+</code></pre>
+<ul>
+<li>日期</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>SAS日期格式</th>
+<th>举例</th>
+<th>SAS日期格式</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DDMMYY6.</td>
+<td>280713</td>
+<td>DDMMYY8.</td>
+<td>28/07/13</td>
+</tr>
+<tr>
+<td>MMDDYY6.</td>
+<td>072813</td>
+<td>MMDDYY8.</td>
+<td>07/28/13</td>
+</tr>
+<tr>
+<td>YYMMDD6.</td>
+<td>130728</td>
+<td>YYMMDD8.</td>
+<td>13/07/28</td>
+</tr>
+<tr>
+<td>DDMMYY8.</td>
+<td>28072013</td>
+<td>DDMMYY10.</td>
+<td>28/07/2013</td>
+</tr>
+<tr>
+<td>MMDDYY8.</td>
+<td>07282013</td>
+<td>MMDDYY10.</td>
+<td>07/28/2013</td>
+</tr>
+<tr>
+<td>YYMMDD8.</td>
+<td>20130728</td>
+<td>YYMMDD10.</td>
+<td>2013/07/28</td>
+</tr>
+<tr>
+<td>DATE7.</td>
+<td>28JUL13</td>
+<td>MONYY5.</td>
+<td>JUL13</td>
+</tr>
+<tr>
+<td>DATE9.</td>
+<td>28JUL2013</td>
+<td>MONYY7.</td>
+<td>JUL2013</td>
+</tr>
+</tbody>
+</table>
+<p><a id="markdown-14-变量输入和输出格式" name="14-变量输入和输出格式"></a></p>
+<h2 id="14-变量输入和输出格式">1.4. 变量输入和输出格式</h2>
+<p><strong>输入格式是给SAS读的，输出是给使用者读的。</strong></p>
+<table>
+<thead>
+<tr>
+<th>变量类型</th>
+<th>输入格式</th>
+<th>输出格式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数值型非日期型</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>数值型日期型</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>字符型</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>1 输入格式</li>
+</ul>
+<p>见上述。使用<strong>input</strong>或<strong>input搭配informat</strong>。不想改变输入值，不要在输入格式中定义宽度。</p>
+<pre><code class="language-sas">data test;
+/*使用input*/
+input date yymmdd10.;
+/*使用input+informat*/
+input date;
+informat date yymmdd10.;
+</code></pre>
+<ul>
+<li>2 输出格式</li>
+</ul>
+<p>大致同输入格式。在data步，在input语句与cards之间使用<strong>format</strong>。</p>
+<pre><code class="language-sas">data test;
+input x;
+format yymmdd10.;
+cards;
+20100101
+20111103
+;
+</code></pre>
+<p><a id="markdown-141-字符型" name="141-字符型"></a></p>
+<h3 id="141-字符型">1.4.1. 字符型</h3>
+<p>完整的格式应该是$ &lt; w. &gt;。</p>
+<p>必须在变量名后加&quot;$&quot;；w表示字节数（1个中文占2个字节）。</p>
+<table>
+<thead>
+<tr>
+<th>输入格式</th>
+<th>输出格式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$ &lt; w. &gt;</td>
+<td>$ &lt; w. &gt;</td>
+</tr>
+<tr>
+<td>默认只读取前8位，超出8位必加上“w.”</td>
+<td>不限制输出位数</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-sas">data city;
+input city$ code$;
+format city $4. code $2.; /*city的输出格式为字符型且字节数为4；code的输出格式为字符型且字节数为2*/
+cards;
+北京市 110000
+天津市 120000
+上海市 310000
+;
+proc print;
+run;
+</code></pre>
+<p>结果为：</p>
+<table>
+<thead>
+<tr>
+<th>Obs</th>
+<th>city</th>
+<th>code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>北京</td>
+<td>11</td>
+</tr>
+<tr>
+<td>2</td>
+<td>天津</td>
+<td>12</td>
+</tr>
+<tr>
+<td>3</td>
+<td>上海</td>
+<td>31</td>
+</tr>
+</tbody>
+</table>
+<p><a id="markdown-142-数值型" name="142-数值型"></a></p>
+<h3 id="142-数值型">1.4.2. 数值型</h3>
+<table>
+<thead>
+<tr>
+<th>输入格式</th>
+<th>输出格式</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>w.d</td>
+<td>w.d</td>
+<td>总位数w，其中小数点后位数d（小数点算1bit）</td>
+</tr>
+<tr>
+<td></td>
+<td>commaw.d</td>
+<td>+ 整数部分加逗号（逗号算1bit）</td>
+</tr>
+<tr>
+<td></td>
+<td>percentw.d</td>
+<td>+ 百分数形式（%算3bit）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>w.d</strong>的理解：</p>
+<ul>
+<li>w是指数值从左到右读取的位数，<strong>包括小数点、逗号</strong>！</li>
+<li>d是指小数点后的位数！</li>
+<li><strong>整数若不带有小数点，则在读取时被认为小数部分。</strong></li>
+</ul>
+<p><strong>comma</strong>w.d 可将数值的整数部分自右向左每三位用逗号隔开，当数值位数较多时，这是比较标准的表示方式。</p>
+<pre><code class="language-sas">data wt;
+input num cost;
+format num 5.2 cost comma12.1; /*num共5位其中2位小数；cost共12位其中1位小数，且用逗号每3位分隔*/
+cards;
+50 10205600
+45 9580000
+;
+proc print;
+run;
+</code></pre>
+<p>例如，输出格式为<strong>comma7.1</strong>时。</p>
+<table>
+<thead>
+<tr>
+<th>输入</th>
+<th>输出</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>111</td>
+<td>111.0</td>
+</tr>
+<tr>
+<td>1111</td>
+<td>1,111.0</td>
+</tr>
+<tr>
+<td>11111</td>
+<td>11111.0</td>
+</tr>
+<tr>
+<td>111111</td>
+<td>111111</td>
+</tr>
+<tr>
+<td>1111111</td>
+<td>1111111</td>
+</tr>
+<tr>
+<td>11111111</td>
+<td>1.111E7</td>
+</tr>
+</tbody>
+</table>
+<p><a id="markdown-143-日期型" name="143-日期型"></a></p>
+<h3 id="143-日期型">1.4.3. 日期型</h3>
+<p>日期有两种类型：数字、日期格式。</p>
+<table>
+<thead>
+<tr>
+<th>输入格式</th>
+<th>输出格式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日期格式</td>
+<td>日期格式</td>
+</tr>
+<tr>
+<td></td>
+<td>分隔符</td>
+</tr>
+</tbody>
+</table>
+<p>日期型变量输入格式与输出格式大致相同，但<strong>输出格式允许</strong>在宽度值前加一个字母，表示日期的分隔符号。<strong>但不能用于date7.或date9.等格式。</strong></p>
+<p><strong>日期格式</strong></p>
+<table>
+<thead>
+<tr>
+<th>日期格式</th>
+<th>举例</th>
+<th>日期格式</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DDMMYY6.</td>
+<td>280713</td>
+<td>DDMMYY8.</td>
+<td>28/07/13</td>
+</tr>
+<tr>
+<td>MMDDYY6.</td>
+<td>072813</td>
+<td>MMDDYY8.</td>
+<td>07/28/13</td>
+</tr>
+<tr>
+<td>YYMMDD6.</td>
+<td>130728</td>
+<td>YYMMDD8.</td>
+<td>13/07/28</td>
+</tr>
+<tr>
+<td>DDMMYY8.</td>
+<td>28072013</td>
+<td>DDMMYY10.</td>
+<td>28/07/2013</td>
+</tr>
+<tr>
+<td>MMDDYY8.</td>
+<td>07282013</td>
+<td>MMDDYY10.</td>
+<td>07/28/2013</td>
+</tr>
+<tr>
+<td>YYMMDD8.</td>
+<td>20130728</td>
+<td>YYMMDD10.</td>
+<td>2013/07/28</td>
+</tr>
+<tr>
+<td><strong>DATE7.</strong></td>
+<td>28JUL13</td>
+<td><strong>MONYY5.</strong></td>
+<td>JUL13</td>
+</tr>
+<tr>
+<td><strong>DATE9.</strong></td>
+<td>28JUL2013</td>
+<td><strong>MONYY7.</strong></td>
+<td>JUL2013</td>
+</tr>
+</tbody>
+</table>
+<p><strong>分隔符号</strong></p>
+<table>
+<thead>
+<tr>
+<th>字母</th>
+<th>含义</th>
+<th>日期输出格式</th>
+<th>结果显示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>s</td>
+<td>slash(/)</td>
+<td>YYMMDDs8.</td>
+<td>13/07/28</td>
+</tr>
+<tr>
+<td>d</td>
+<td>dash(-)</td>
+<td>YYMMDDd8.</td>
+<td>13-07-28</td>
+</tr>
+<tr>
+<td>p</td>
+<td>point(.)</td>
+<td>YYMMDDp8.</td>
+<td>13.07.28</td>
+</tr>
+<tr>
+<td>c</td>
+<td>colon(😃</td>
+<td>YYMMDDc8.</td>
+<td>13:07:28</td>
+</tr>
+<tr>
+<td>b</td>
+<td>blank( )</td>
+<td>YYMMDDb8.</td>
+<td>13 07 28</td>
+</tr>
+<tr>
+<td>n</td>
+<td>nothing()</td>
+<td>YYMMDDn8.</td>
+<td>20130728</td>
+</tr>
+</tbody>
+</table>
+<p><a id="markdown-144-自定义输入和输出格式proc--format" name="144-自定义输入和输出格式proc--format"></a></p>
+<h3 id="144-自定义输入和输出格式proc-format">1.4.4. 自定义输入和输出格式：proc  format</h3>
+<ul>
+<li>自定义值的内容的输入与输出格式 <strong>invalue 与 value</strong></li>
+</ul>
+<p>invalue 输入看“<strong>原值</strong>”</p>
+<p>value 输出看“<strong>新值</strong>”</p>
+<pre><code class="language-sas">proc format;
+invalue &lt;$&gt; variable_name range/value = self-defined value.../*自定义输入格式*/
+value &lt;$&gt; variable_name range/value = self-defined value.../*自定义输出格式*/
+picture module_name &lt; range &gt;;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>原值</th>
+<th>新值</th>
+<th>语句</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>输入</td>
+<td>字符型</td>
+<td><strong>数值型</strong></td>
+<td>invalue grade &quot;a&quot;-&quot;g&quot;=1 other=2</td>
+</tr>
+<tr>
+<td>输入</td>
+<td>字符型</td>
+<td><strong>字符型</strong></td>
+<td>invalue <strong>$grade</strong> &quot;a&quot;-&quot;g&quot;=&quot;fair&quot;  &quot;o&quot;,&quot;u&quot;=&quot;other&quot;</td>
+</tr>
+<tr>
+<td>输入</td>
+<td>数值型</td>
+<td><strong>数值型</strong></td>
+<td>invalue lxfmt 1-4=<em>same</em> 99=.;      1-4则保持不变，99则改为缺失值</td>
+</tr>
+<tr>
+<td>输入</td>
+<td>数值型</td>
+<td><strong>字符型</strong></td>
+<td>invalue <strong>$gender</strong> 1=&quot;male&quot; 2=&quot;female&quot;</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>原值</th>
+<th>新值</th>
+<th>语句</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>输出</td>
+<td><strong>字符型</strong></td>
+<td>字符型</td>
+<td>value <strong>$grade</strong> &quot;a&quot;-&quot;g&quot;=&quot;fair&quot;</td>
+</tr>
+<tr>
+<td>输出</td>
+<td><strong>字符型</strong></td>
+<td>数值型</td>
+<td>value <strong>$grade</strong> &quot;a&quot;-&quot;g&quot;=&quot;fair&quot;  &quot;o&quot;,&quot;u&quot;=&quot;other&quot;</td>
+</tr>
+<tr>
+<td>输出</td>
+<td><strong>数值型</strong></td>
+<td>字符型</td>
+<td></td>
+</tr>
+<tr>
+<td>输出</td>
+<td><strong>数值型</strong></td>
+<td>数值型</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>自定义值的形式的格式 <strong>picture</strong></li>
+</ul>
+<pre><code class="language-sas">picture 格式名 原值=新格式(prefix=&quot;￥&quot;);/*prefix表示加前缀*/
+
+proc format;
+/*对所有数值，定义格式要求：前缀为￥，每满三位数加逗号“,”*/
+picture gs1 low-high=&quot;0,000,000&quot;(prefix=&quot;￥&quot;);
+/**/
+picture gs2 low-high=&quot;09.99%&quot;;
+run;
+data profit;
+input profit prop;
+format profit gs1. prop gs2.;
+cards;
+298000 16.72
+458992 21.30
+;
+proc print;
+run;
+
+</code></pre>
+<p>结果为：</p>
+<table>
+<thead>
+<tr>
+<th>Obs</th>
+<th>profit</th>
+<th>prop</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>￥298,000</td>
+<td>16.72%</td>
+</tr>
+<tr>
+<td>2</td>
+<td>￥458,992</td>
+<td>21.30%</td>
+</tr>
+</tbody>
+</table>
+<p>说明一下，&quot;09.99%&quot;的理解是：</p>
+<ol>
+<li>先对齐小数点；</li>
+<li>再根据小数点前多少位数就保留多少位数</li>
+<li>整数部分从个位开始，小数点前多少位就保留多少位数</li>
+<li>倘若不只有一个小数点，那么先对齐最末尾的小数点；</li>
+<li>末尾加上符号（<strong>不是把原值改为等值的百分数形式！！无论是什么符号都可以！！</strong>）</li>
+</ol>
+<p><a id="markdown-15-特殊变量的输入" name="15-特殊变量的输入"></a></p>
+<h2 id="15-特殊变量的输入">1.5. 特殊变量的输入</h2>
+<p><a id="markdown-151-给定宽度是否取空格为字符" name="151-给定宽度是否取空格为字符"></a></p>
+<h3 id="151-给定宽度是否取空格为字符">1.5.1. 给定宽度，是否取空格为字符</h3>
+<pre><code class="language-sas">data test;
+input id$8. gender$1. city$7.;
+cards;
+12345678 m beijing
+;
+proc print;
+run;
+</code></pre>
+<p>所得结果为：</p>
+<table>
+<thead>
+<tr>
+<th>obs</th>
+<th>id</th>
+<th>gender</th>
+<th>city</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>12345678</td>
+<td></td>
+<td>m beiji</td>
+</tr>
+</tbody>
+</table>
+<p>原因是<strong>指定宽度后，空格也成为字符的一部分</strong>。修改方式如下：</p>
+<ul>
+<li>
+<p>需要指定多个变量的宽度</p>
+<ul>
+<li>
+<p>改变输入格式中的宽度</p>
+<pre><code class="language-sas">input id$9. gender$2. city$7.
+</code></pre>
+</li>
+<li>
+<p>改变变量的读取位置（+1表示往后1个字符读取）</p>
+<pre><code class="language-sas">input id$8.+1 gender$1.+1 city$7.;
+</code></pre>
+</li>
+<li>
+<p>利用<strong>冒号（:）<strong>来正确读取（冒号表示</strong>识别前后的空格是分隔符号</strong>，不作为字符内容；否则空格也是字符的一部分）</p>
+<p>冒号（:）的作用是告诉SAS，如果要读取下一个数据，需要满足下面任一条件：</p>
+<ul>
+<li>遇到空格；</li>
+<li>指定的变量宽度已满；</li>
+<li>数据行结束。</li>
+</ul>
+<pre><code class="language-sas">input id:$8. gender:$1. city:$7.;
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>数据集中有空格</p>
+<p><strong>&amp;<strong>读取 <strong>空格</strong>作为字符的一部分，而</strong><u>多个空格则作为分隔符</u></strong></p>
+<p>（变量名后加 “<strong>&amp;</strong>”。同时cards后的不同变量之间需要<strong>至少2个</strong>空格。）</p>
+<pre><code class="language-sas">data fh;
+input name&amp;:$50. city&amp;:$50.; /*变量名后加 $ */
+cards;
+Peter Parker  山东省 蓬莱市  /*两个变量之间至少2个空格*/
+Ross Geller  山东省 青岛市 市南区  
+;
+proc print;
+run;
+</code></pre>
+</li>
+</ul>
+<p><a id="markdown-152-数据集中有缺失值" name="152-数据集中有缺失值"></a></p>
+<h3 id="152-数据集中有缺失值">1.5.2. 数据集中有<mark>缺失值</mark></h3>
+<p>缺失值用 “<strong>.</strong> ”表示。</p>
+<pre><code class="language-sas">data fh;
+input id day: yymmdd8. city:$20.; 
+format day yymmddp10.;  
+cards;
+37 980515 .
+. 120607 shanghai
+39 . nanjing
+;
+proc print;
+run;
+</code></pre>
+<p>结果为</p>
+<table>
+<thead>
+<tr>
+<th>obs</th>
+<th>id</th>
+<th>day</th>
+<th>city</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>37</td>
+<td>1998.05.15</td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td>.</td>
+<td>2012.06.07</td>
+<td>shanghai</td>
+</tr>
+<tr>
+<td>3</td>
+<td>39</td>
+<td>.</td>
+<td>nanjing</td>
+</tr>
+</tbody>
+</table>
+<p><a id="markdown-153-有规律的变量" name="153-有规律的变量"></a></p>
+<h3 id="153-有规律的变量">1.5.3. 有规律的变量</h3>
+<p>用do循环输入数据</p>
+<pre><code class="language-sas">data test;
+do count=3 to 9 by 2；
+&lt;语句&gt;
+end；
+run；
+</code></pre>
+<p>其中的语句若使用input，则必须加上output。</p>
+<p>例如1-12月是连续加1的规律。</p>
+<p>未使用do循环时：</p>
+<pre><code class="language-sas">data test;
+input count time;
+cards;
+1 23
+2 29
+3 49
+4 64
+5 87
+6 96
+;
+proc print;
+run;
+</code></pre>
+<p>由于count具有加1的规律，使用do循环后：</p>
+<pre><code class="language-sas">data test;
+do count=1 to 6; /*使用do循环输入count的值*/
+input time;
+output; /*必须*/
+end; /*必须*/
+cards; /*省略count的输入*/
+23
+29
+49
+64
+87
+96
+;
+proc print;
+run;
+</code></pre>
+<p><a id="markdown-154-是否换行输入" name="154-是否换行输入"></a></p>
+<h3 id="154-是否换行输入">1.5.4. 是否换行输入</h3>
+<p>用@符号</p>
+<ul>
+<li>
+<p>@@与@符号的区别：</p>
+<ul>
+<li>@@强制保持当前记录，不管data步中有没有其他语句</li>
+<li>@如果data步中没有其他语句，就hold不住当前记录，仍然转到下一记录，如果有第二个input语句，就可以hold住当前记录，等待第二个input顺序读取</li>
+</ul>
+</li>
+<li>
+<p><mark>@@</mark> 强行保持当前行。所输入数据均作为<strong>某一变量</strong>的值</p>
+<ul>
+<li>CASE 1——录入单一变量</li>
+</ul>
+<pre><code class="language-sas">data test;
+input weigh@@;
+cards;
+1 2 3 
+4 5 6
+;
+proc print;
+run;
+</code></pre>
+<p>​	结果为：</p>
+<table>
+<thead>
+<tr>
+<th>Obs</th>
+<th>weigh</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>5</td>
+<td>5</td>
+</tr>
+<tr>
+<td>6</td>
+<td>6</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>CASE 2——输入列联表</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>吸烟（1）</th>
+<th>不吸烟（2）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>男（1）</td>
+<td>100</td>
+<td>150</td>
+</tr>
+<tr>
+<td>女（2）</td>
+<td>10</td>
+<td>140</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-sas">/*常规输入*/
+data a;
+input gender smoking;
+cards; /*每一行表示一个个案的资料*/
+1 2
+2 1
+1 1
+1 1
+...
+;
+proc print;
+run;
+/*用@@输入*/
+data a;
+do gender= 1 to 2;
+do smoking= 1 to 2; /*先进行小循环，后进行大循环*/
+input x@@; /*x为频数*/
+output;
+end;
+end;
+cards;
+100 150
+10 140
+;
+run;
+</code></pre>
+<p>​	结果：</p>
+<table>
+<thead>
+<tr>
+<th>Obs</th>
+<th>gender</th>
+<th>smoking</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>4</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p><strong>@</strong> 保持当前行</p>
+<pre><code class="language-SAS">data test;
+/*&lt;几种不同的input方式&gt;;*/
+cards;
+1 2 3 4
+5 6 7 8
+;
+proc print;
+run;
+
+/*1*/
+input x@@;
+/*2*/
+input x;
+input y;
+/*3*/
+input x@;
+input y;
+/*4*/
+input x y;
+</code></pre>
+<p>结果分别为：</p>
+<p>&lt;1&gt;通过@@强制将所有数据录入为值</p>
+<table>
+<thead>
+<tr>
+<th>Obs</th>
+<th>x</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>5</td>
+<td>5</td>
+</tr>
+<tr>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr>
+<td>7</td>
+<td>7</td>
+</tr>
+<tr>
+<td>8</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<p>&lt;2&gt;x与y分别在两行，各取一个值</p>
+<pre><code class="language-sas">/*2*/
+input x;
+input y;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Obs</th>
+<th>x</th>
+<th>y</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<p>&lt;3&gt;通过@保留原排列并认为第一、二列分别是x、y变量</p>
+<pre><code class="language-sas">/*3*/
+input x@;
+input y;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Obs</th>
+<th>x</th>
+<th>y</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>2</td>
+<td>5</td>
+<td>6</td>
+</tr>
+</tbody>
+</table>
+<p>&lt;4&gt;第一、二列分别是x、y变量</p>
+<pre><code class="language-sas">/*4*/
+input x y;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Obs</th>
+<th>x</th>
+<th>y</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>2</td>
+<td>5</td>
+<td>6</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<p><a id="markdown-1541-输入重复测量数据" name="1541-输入重复测量数据"></a></p>
+<h4 id="1541-输入重复测量数据">1.5.4.1. 输入重复测量数据</h4>
+<pre><code>```sas
+/*常规输入*/
+data test1;
+input id time score;
+cards;
+1 1 86
+1 2 89
+1 3 90
+2 1 89
+2 2 87
+2 3 91
+...
+;
+proc print;
+run;
+/*利用@符号输入*/
+data test2;
+input id@;
+do time= 1 to 3; /*对于每个id，都有time从1到3取值*/
+input score@@; /*对于每个id与time的组合，都有一个score相对应*/
+output;
+end;
+cards;
+1 86 89 90
+2 89 87 91
+...
+;
+proc print;
+run;
+```
+</code></pre>
+<p><a id="markdown-155-产生新变量" name="155-产生新变量"></a></p>
+<h3 id="155-产生新变量">1.5.5. 产生新变量</h3>
+<pre><code class="language-sas">新变量 = 表达式 或者 函数
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>算术运算符</th>
+<th>比较运算符</th>
+<th>逻辑运算符</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>+ （加）</td>
+<td>=（等于）、 ^=（不等于）</td>
+<td>&amp;或and（表示2个表达式同时成立）</td>
+</tr>
+<tr>
+<td>- （减）</td>
+<td>&gt;（大于）、 &lt;（小于）</td>
+<td>|或or（表示2个表达式任一成立）</td>
+</tr>
+<tr>
+<td>* （乘）</td>
+<td>&gt;=（大于等于）、 &lt;=（小于等于）</td>
+<td></td>
+</tr>
+<tr>
+<td>/ （除）</td>
+<td>in(范围)（属于其中）grade in(2,4,6)表示只要是grade为2、4、6中的其中一个就算符合条件</td>
+<td></td>
+</tr>
+<tr>
+<td>**          （幂次方）</td>
+<td>dept not in(“A”, “B”)表示只要dept不是“A”或“B”就算成立</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><a id="markdown-1551-宽度限制" name="1551-宽度限制"></a></p>
+<h4 id="1551-宽度限制">1.5.5.1. 宽度限制</h4>
+<p>产生新变量前，对其进行宽度限定，使用length</p>
+<pre><code class="language-sas">data bonus;
+input id g1 g2 bonus;
+length g $6.;  /*定义字符变量g的长度为6，若无该语句，则宽度受第一个值的影响*/
+if g1&gt;=70 and g2&gt;=70 then g=&quot;合格&quot;;
+else g=&quot;不合格&quot;;
+if g=&quot;合格&quot; then bonus=bonus*1;
+else bonus=bonus*0.5;
+cards;
+1 67 74 10000
+2 80 85 11000
+3 89 87 11000
+4 78 69 10000
+;
+proc print;
+run;
+</code></pre>
+<p>无length语句：</p>
+<table>
+<thead>
+<tr>
+<th>Obs</th>
+<th>id</th>
+<th>g1</th>
+<th>g2</th>
+<th>bonus</th>
+<th>g</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>67</td>
+<td>74</td>
+<td>5000</td>
+<td>不合</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>80</td>
+<td>85</td>
+<td>11000</td>
+<td>合格</td>
+</tr>
+<tr>
+<td>3</td>
+<td>3</td>
+<td>89</td>
+<td>87</td>
+<td>11000</td>
+<td>合格</td>
+</tr>
+<tr>
+<td>4</td>
+<td>4</td>
+<td>78</td>
+<td>69</td>
+<td>5000</td>
+<td>不合</td>
+</tr>
+</tbody>
+</table>
+<p>有length语句：</p>
+<table>
+<thead>
+<tr>
+<th>Obs</th>
+<th>id</th>
+<th>g1</th>
+<th>g2</th>
+<th>bonus</th>
+<th>g</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>67</td>
+<td>74</td>
+<td>5000</td>
+<td>不合格</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>80</td>
+<td>85</td>
+<td>11000</td>
+<td>合格</td>
+</tr>
+<tr>
+<td>3</td>
+<td>3</td>
+<td>89</td>
+<td>87</td>
+<td>11000</td>
+<td>合格</td>
+</tr>
+<tr>
+<td>4</td>
+<td>4</td>
+<td>78</td>
+<td>69</td>
+<td>5000</td>
+<td>不合格</td>
+</tr>
+</tbody>
+</table>
+<p><a id="markdown-16-数据集的导入和导出" name="16-数据集的导入和导出"></a></p>
+<h2 id="16-数据集的导入和导出">1.6. 数据集的导入和导出</h2>
+<p><a id="markdown-17-建立和调用永久性数据集" name="17-建立和调用永久性数据集"></a></p>
+<h2 id="17-建立和调用永久性数据集">1.7. 建立和调用永久性数据集</h2>
+<p>SAS数据都是存放在资源管理器的逻辑库中。逻辑库中有SAS自带的6个文件夹，用来存放不同类型的数据。<br>
+理论上，我们在用data语句起名字时，还需要告诉SAS建立的数据集是放在哪个文件夹里。如，data sasuser.fh;表示建立数据集fh，放在sasuser这个文件夹，再如data work.fh;表示建立数据集fh，放在work这个文件夹。<br>
+SAS默认，如果data语句中没有加文件夹名字，就是<strong>默认为存放到临时文件夹work</strong>中，也就是说，data fh;与data work.fh;是完全等同的。当关闭sas时work内的数据集将清空。</p>
+<p><a id="markdown-171-建立永久性数据集" name="171-建立永久性数据集"></a></p>
+<h3 id="171-建立永久性数据集">1.7.1. 建立永久性数据集</h3>
+<p>相当于把建立的数据集存放到硬盘的一个文件夹中。具体主要包括三个步骤：</p>
+<ul>
+<li>在电脑硬盘建立一个文件夹，准备用来存放数据集；</li>
+<li>在SAS的资源管理器中也新建一个文件夹，起个自己喜欢的英文名字；</li>
+<li>把这两个文件夹关联起来。</li>
+</ul>
+<p><strong>方式一：菜单中新建</strong><br>
+[1]在本地硬盘建立一个文件夹作为数据集存放处（假设路径为g盘目录下的mysasfile文件夹）<br>
+[2]逻辑库处右键新建新库并命名（假设是mydir），路径浏览选择上述文件夹<br>
+[3]编辑器处添加数据集</p>
+<pre><code class="language-sas">data mydir.test; /*在mydir库中添加名为test的新数据集*/
+input id day: yymmdd8. city:$20.;    
+format day yymmddp10.;  
+cards;
+370685 980515 shandong
+;
+run; /*运行后，在g盘目录下的mysasfile文件夹中会出现test数据集*/
+</code></pre>
+<p><strong>方式二：编辑器中新建，并与逻辑库关联</strong><br>
+[1]同上<br>
+[2]编辑器中新建新库，并添加数据集</p>
+<pre><code class="language-sas">libname mydir &quot;g:\mysasfile&quot;; /*新建名为mydir的新库，并与路径中的文件夹相关联*/
+data mydir.test; /*在mydir库中添加名为test的新数据集*/
+input id day: yymmdd8. city:$20.;    
+format day yymmddp10.;  
+cards;
+370685 980515 shandong
+;
+run; /*运行后，在g盘目录下的mysasfile文件夹中会出现test数据集*/
+</code></pre>
+<p><strong>方式三：编辑器中新建</strong></p>
+<pre><code class="language-sas">data &quot;g:\mysasfile\first&quot;;/*在g:\mysasfile\中新建一个名为first的数据集*/
+input id day: yymmdd8. city:$20.;    
+format day yymmddp10.;  
+cards;
+370685 980515 shandong
+;
+run;
+</code></pre>
+<p><a id="markdown-172-调用永久性数据集" name="172-调用永久性数据集"></a></p>
+<h3 id="172-调用永久性数据集">1.7.2. 调用永久性数据集</h3>
+<p>调用硬盘上的SAS数据集<br>
+[1]首先要知道硬盘上的文件夹位置及名称<br>
+[2]]利用libname语句读取相应位置的文件夹中的文件</p>
+<pre><code class="language-sas">libname mydir &quot;g:\mysasfile&quot;; 
+proc print data= mydir.test;
+run;
+</code></pre>
+
+                                </div>
+                    </article>
+                    <!--  -->
+                    
+                        <div class="next-post">
+                            <div class="next">下一篇</div>
+                            <a href="https://github.com/XiaotongMo/xiaotongmo.github.io/post/hello-gridea/">
+                                <h3 class="post-title">
+                                    Hello Gridea
+                                </h3>
+                            </a>
+                        </div>
+                        
+                            <div id="disqus_thread"></div>
+                            <div id="gitalk-container"></div>
+                </div>
+                <!-- middle -->
+                <div class="main-container-middle"></div>
+                <!-- right -->
+                <div id="sidebar" class="main-container-right">
+                    
+                        <!-- toc -->
+                        
+    <div class="toc-card i-card ">
+        <div class="toc-title i-card-title">目录</div>
+        <div class="toc-content">
+            <ul class="markdownIt-TOC">
+<li><a href="#1-lesson-1-%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E5%BB%BA%E7%AB%8B">1. Lesson 1 数据集的建立</a>
+<ul>
+<li><a href="#11-%E7%AE%80%E4%BB%8B">1.1. 简介</a></li>
+<li><a href="#12-%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%BE%93%E5%85%A5%E6%96%B9%E5%BC%8F%E6%95%B0%E6%8D%AE%E6%AD%A5">1.2. 数据集的基本输入方式（数据步）</a></li>
+<li><a href="#13-%E6%95%B0%E6%8D%AE%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B">1.3. 数据变量类型</a>
+<ul>
+<li><a href="#131-%E5%AD%97%E7%AC%A6%E5%9E%8Bcharacter">1.3.1. 字符型character</a></li>
+<li><a href="#132-%E6%95%B0%E5%80%BC%E5%9E%8Bnumeric">1.3.2. 数值型numeric</a></li>
+</ul>
+</li>
+<li><a href="#14-%E5%8F%98%E9%87%8F%E8%BE%93%E5%85%A5%E5%92%8C%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F">1.4. 变量输入和输出格式</a>
+<ul>
+<li><a href="#141-%E5%AD%97%E7%AC%A6%E5%9E%8B">1.4.1. 字符型</a></li>
+<li><a href="#142-%E6%95%B0%E5%80%BC%E5%9E%8B">1.4.2. 数值型</a></li>
+<li><a href="#143-%E6%97%A5%E6%9C%9F%E5%9E%8B">1.4.3. 日期型</a></li>
+<li><a href="#144-%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BE%93%E5%85%A5%E5%92%8C%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8Fproc-format">1.4.4. 自定义输入和输出格式：proc  format</a></li>
+</ul>
+</li>
+<li><a href="#15-%E7%89%B9%E6%AE%8A%E5%8F%98%E9%87%8F%E7%9A%84%E8%BE%93%E5%85%A5">1.5. 特殊变量的输入</a>
+<ul>
+<li><a href="#151-%E7%BB%99%E5%AE%9A%E5%AE%BD%E5%BA%A6%E6%98%AF%E5%90%A6%E5%8F%96%E7%A9%BA%E6%A0%BC%E4%B8%BA%E5%AD%97%E7%AC%A6">1.5.1. 给定宽度，是否取空格为字符</a></li>
+<li><a href="#152-%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%AD%E6%9C%89%E7%BC%BA%E5%A4%B1%E5%80%BC">1.5.2. 数据集中有==缺失值==</a></li>
+<li><a href="#153-%E6%9C%89%E8%A7%84%E5%BE%8B%E7%9A%84%E5%8F%98%E9%87%8F">1.5.3. 有规律的变量</a></li>
+<li><a href="#154-%E6%98%AF%E5%90%A6%E6%8D%A2%E8%A1%8C%E8%BE%93%E5%85%A5">1.5.4. 是否换行输入</a>
+<ul>
+<li><a href="#1541-%E8%BE%93%E5%85%A5%E9%87%8D%E5%A4%8D%E6%B5%8B%E9%87%8F%E6%95%B0%E6%8D%AE">1.5.4.1. 输入重复测量数据</a></li>
+</ul>
+</li>
+<li><a href="#155-%E4%BA%A7%E7%94%9F%E6%96%B0%E5%8F%98%E9%87%8F">1.5.5. 产生新变量</a>
+<ul>
+<li><a href="#1551-%E5%AE%BD%E5%BA%A6%E9%99%90%E5%88%B6">1.5.5.1. 宽度限制</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#16-%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E5%AF%BC%E5%85%A5%E5%92%8C%E5%AF%BC%E5%87%BA">1.6. 数据集的导入和导出</a></li>
+<li><a href="#17-%E5%BB%BA%E7%AB%8B%E5%92%8C%E8%B0%83%E7%94%A8%E6%B0%B8%E4%B9%85%E6%80%A7%E6%95%B0%E6%8D%AE%E9%9B%86">1.7. 建立和调用永久性数据集</a>
+<ul>
+<li><a href="#171-%E5%BB%BA%E7%AB%8B%E6%B0%B8%E4%B9%85%E6%80%A7%E6%95%B0%E6%8D%AE%E9%9B%86">1.7.1. 建立永久性数据集</a></li>
+<li><a href="#172-%E8%B0%83%E7%94%A8%E6%B0%B8%E4%B9%85%E6%80%A7%E6%95%B0%E6%8D%AE%E9%9B%86">1.7.2. 调用永久性数据集</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+        <script>
+            function locateCatelogList() {
+                /*获取文章目录集合,可通过:header过滤器*/
+                var alis = $('.post-content :header');
+                /*获取侧边栏目录列表集合**/
+                var sidebar_alis = $('.markdownIt-TOC a');
+                /*获取滚动条到顶部的距离*/
+                var scroll_height = $(window).scrollTop();
+                for (var i = 0; i < alis.length; i++) {
+                    /*获取锚点集合中的元素分别到顶点的距离*/
+                    var a_height = $(alis[i]).offset().top;
+                    if (a_height < scroll_height) {
+                        /*高亮显示*/
+                        sidebar_alis.removeClass('on');
+                        $(sidebar_alis[i]).addClass('on');
+                    }
+                }
+            }
+            $(function() {
+                /*绑定滚动事件 */
+                $(window).bind('scroll', locateCatelogList);
+            });
+        </script>
+    </div>
+    
+                            
+
+                </div>
+
+
+
+
+            </div>
+
+
+            <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | 
+  <a class="rss" href="https://github.com/XiaotongMo/xiaotongmo.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+
+    </div>
+    <script>
+        $('#sidebar').stickySidebar({
+            topSpacing: 80,
+            // bottomSpacing: 60
+        });
+    </script>
+    
+</body>
+
+</html>
